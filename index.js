@@ -21,7 +21,7 @@ const db = new pg.Client({
 db.connect();
 
 app.get("/", async (req, res) => {
-    const response = await db.query("SELECT * FROM books");
+    const response = await db.query("SELECT * FROM books ORDER BY id ASC");
     const data = response.rows;
     res.render("index.ejs", {entries: data});
 });

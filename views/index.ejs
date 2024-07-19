@@ -30,17 +30,21 @@
                 </div>     
             </form>
         </div>
-    <% entries.forEach(entry => { %>
-        <div class="book-review">
-            <h2><%= entry.title%></h2>
-            <img src="<%= entry.url%>" alt="<%= entry.url %>">
-            <h3><%=entry.rating%></h3>
-            <p><%= entry.notes %></p>
-            <form action="/delete-item" method="post">
-                <button type="submit" value="<%= entry.id%>" name="deleteItemID" class="button">Delete</button>
-            </form>
+        <div id="notes-container">
+            <h2>All Notes</h2>
+            <% entries.forEach(entry => { %>
+                <div class="book-review">
+                    <h3><%= entry.title%> : <%=entry.rating%>/10</h2>
+                    <div class="content">
+                        <img src="<%= entry.url%>" alt="<%= entry.url %>">
+                        <p><%= entry.notes %></p>
+                    </div>
+                    <form action="/delete-item" method="post">
+                        <button type="submit" value="<%= entry.id%>" name="deleteItemID" class="button" id="delete-btn">Delete</button>
+                    </form>
+                </div>
+            <% }); %>
         </div>
-    <% }); %>
     </div>
     <script>
         function toggleButton(){
