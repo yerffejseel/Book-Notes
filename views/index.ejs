@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Notes</title>
+</head>
+<body>
+    <h1>Summarize, <br>Take Notes, <br>and Review Books</h1>
+    <button onclick="toggleButton()" id="form-btn">Form</button>
+    <form action="/isbn" method="post" id="form" style="display: none;">
+        <input type="text" name="isbn" placeholder="Enter ISBN">
+        <input type="number" min="1" max="10" placeholder="Rating 1-10" name="rating" step="1">
+        <textarea name="notes"></textarea>
+        <input type="submit" value="Submit">
+    </form>
+    <script>
+        function toggleButton(){
+            document.getElementById("form-btn").style.display = "none"
+            document.getElementById("form").style.display = "block";
+        }
+    </script>
+</body>
+</html>
