@@ -12,29 +12,47 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = new pg.Client({
     user: "postgres",
-    host: "localhost",
     database: "book notes",
-    password: "Ninjanerd12",
-    port: 5432
-})
+    host: "localhost",
+    port: 5432,
+    password: "Ninjanerd12"
+});
 
 db.connect();
 
-app.get("/", (req, res) => {
-    res.render("index.ejs");
+app.get("/", async (req, res) => {
+    const response = await db.query("SELECT * FROM books");
+    const data = response.rows;
+    res.render("index.ejs", {entries: data});
 });
 
-app.post("/search", async (req, res) => {
-    const isbn = req.body["isbn"];
+app.post("/isbn", async (req, res) => {
+    const isbn = req.body.isbn;
     try {
-        const response = await axios.get(APIURL + isbn + ".json");
-        const sourceURL = response.data.source_url;
+        const json = await axios.get(APIURL + isbn + ".json");
+        const sourceURL = json.data.source_url;
         try {
-            
+            const rating = req.body.rating;
+            const notes = req.body.notes;
+            const title = req.body.title;
+            await db.query("INSERT INTO books (url, rating, notes, title) VALUES ($1, $2, $3, $4)",
+                [sourceURL, rating, notes, title]
+            );
+            res.redirect("/");
         } catch(err) {
-
+            res.redirect("/");
         }
     } catch(err) {
+        res.redirect("/");
+    }
+});
+
+app.post("/delete-item", async (req, res) => {
+    const id = req.body.deleteItemID;
+    try {
+        await db.query("DELETE FROM books WHERE id = $1", [id]);
+        res.redirect("/");
+    } catch (err) {
         res.redirect("/");
     }
 });
