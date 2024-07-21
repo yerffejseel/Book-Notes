@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
 import axios from "axios";
+import { password } from "./private";
 
 const app = express();
 const port = 3000;
@@ -15,7 +16,7 @@ const db = new pg.Client({
     database: "book notes",
     host: "localhost",
     port: 5432,
-    password: "Ninjanerd12"
+    password: password
 });
 
 db.connect();
