@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
 import axios from "axios";
-import { password } from "./private";
+import { password } from "./private.js";
 
 const app = express();
 const port = 3000;
